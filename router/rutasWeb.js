@@ -10,7 +10,12 @@ router.get("/404", (req,res)=>{
 router.get("/servicios", (req,res)=>{
     res.render("servicios")
 });
+router.get("/C", (req,res)=>{
+    res.render("crear")
+});
 router.get("/mscotas", (req,res)=>{
     res.render("servicios")
 });
+
+
 module.exports = router;

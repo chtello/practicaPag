@@ -1,26 +1,34 @@
 const express = require("express");
 const router = express.Router();
-const Mascota = require("../models/mascota");
+const Mascota = require("../models/mascota")
 
 router.get("/", async (req,res)=>{
 
     try {
     const arrayMascotasDB = await Mascota.find()
-    console.log("hola" + arrayMascotasDB)
+    console.log(arrayMascotasDB)
+    res.render("mascotas",{
+        arrayMascotas: arrayMascotasDB
+    })
+
 
 } catch (error) {
 console.log(error)
 }
-
-
-res.render("mascotas",{
-        arrayMascotas:[
-            {id:"sdfghjk", descripcion:"mundo",nombre:"hola"},
-            {id:"sdfghjk2", descripcion:"mundo2",nombre:"hola2"},
-            {id:"sdfghjk3", descripcion:"mundo3",nombre:"hola3"},
-            {id:"sdfghjk4", descripcion:"mundo4",nombre:"hola4"},
-        ]
-    })
 })
+
+
+
+router.post("/", async (req,res)=>{
+const body = req.body
+try {
+    const mascotasDB = new Mascota(body)
+    await mascotasDB.save()
+res.redirect("/mascotas")
+} catch (error) {
+    console.log(error)
+}
+});
+
 module.exports = router;
 
